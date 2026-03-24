@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
+  styleUrl: './app.css',
 })
 export class App implements AfterViewInit {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
@@ -12,7 +13,7 @@ export class App implements AfterViewInit {
   private ctx!: CanvasRenderingContext2D;
   protected readonly title = signal('lenet5-visualizer');
   private drawing = false;
-  result = signal(-1);
+  result = signal<number>(-1);
 
   ngAfterViewInit() {
     this.ctx = this.canvasRef.nativeElement.getContext("2d")!;
@@ -26,7 +27,7 @@ export class App implements AfterViewInit {
   clear() {
     this.ctx.fillStyle = "#000000";
     this.ctx.fillRect(0, 0, 280, 280);
-    this.result.update(curr => -1);
+    this.result.set(-1);
   }
 
   startDraw(event: MouseEvent) {

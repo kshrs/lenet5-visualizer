@@ -4,6 +4,9 @@
 
 A handwritten digit recognizer built with a partial-from-scratch LeNet-5 implementation in PyTorch, served via a Node.js backend and an Angular frontend.
 
+![Test with handwritten digit 1](./screenshots/sample_1.png)
+![Test with handwritten digit 2](./screenshots/sample_2.png)
+
 ## Stack
 
 - **Model** — LeNet-5 trained on MNIST, exported to ONNX
@@ -40,7 +43,8 @@ and place the extracted files in `mnist_dataset/`.
 ```bash
 cd backend
 npm install
-node src/server.js
+cd src
+node server.js
 # runs on http://localhost:3000
 ```
 

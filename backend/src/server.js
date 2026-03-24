@@ -23,7 +23,6 @@ app.post('/predict', async (req, res) => {
         const tensor = new ort.Tensor('float32', Float32Array.from(input), [1, 1, 32, 32]);
         const result = await session.run({'input': tensor});
         const predicted = argmax(result.output.data);
-        console.log(predicted);
         res.status(200).json({
             result: predicted
         })

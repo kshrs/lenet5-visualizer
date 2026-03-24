@@ -1,17 +1,94 @@
-<div style="display: flex; flex-direction: column; align-items: center; gap:16px; padding: 10px;">
-  <h2>Draw a Digit</h2>
-  <canvas #canvas height="280" width="280"
-    style="border: 2px solid black; cursor: crosshair; background: #000000;"
-    (mousedown)="startDraw($event)"
-    (mousemove)="draw($event)"
-    (mouseup)="stopDraw()"
-    (mouseleave)="stopDraw()">
-  </canvas>
-  <div style="display: flex; gap: 16px;">
-    <button (click)="predict()">Predict</button>
-    <button (click)="clear()">Clear</button>
-  </div>
-  @if (result() > -1) {
-  <h1>{{ result() }}</h1>
-  }
+<div class="app-shell">
+
+  <!-- grid background -->
+  <div class="grid-bg"></div>
+
+  <!-- top bar -->
+  <header class="topbar">
+    <div class="topbar__left">
+      <span class="topbar__tag">@kshrs</span>
+      <span class="topbar__title">LeNet-5 · Digit Classifier</span>
+    </div>
+    <div class="topbar__right">
+      <span class="topbar__status">
+        <span class="status-dot"></span>MODEL READY
+      </span>
+    </div>
+  </header>
+
+  <!-- main panel grid -->
+  <main class="panel-grid">
+
+    <!-- canvas panel -->
+    <section class="panel panel--canvas">
+      <div class="panel__header">
+        <span class="panel__label">INPUT · 28×28</span>
+        <span class="panel__hint">draw here</span>
+      </div>
+      <div class="canvas-wrap">
+        <canvas #canvas width="280" height="280"
+          (mousedown)="startDraw($event)"
+          (mousemove)="draw($event)"
+          (mouseup)="stopDraw()"
+          (mouseleave)="stopDraw()">
+        </canvas>
+        <div class="canvas-corner canvas-corner--tl"></div>
+        <div class="canvas-corner canvas-corner--tr"></div>
+        <div class="canvas-corner canvas-corner--bl"></div>
+        <div class="canvas-corner canvas-corner--br"></div>
+      </div>
+      <div class="panel__actions">
+        <button class="btn btn--primary" (click)="predict()">
+          <span class="btn__icon">▶</span> RUN INFERENCE
+        </button>
+        <button class="btn btn--ghost" (click)="clear()">
+          CLR
+        </button>
+      </div>
+    </section>
+
+    <!-- output panel -->
+    <section class="panel panel--output">
+      <div class="panel__header">
+        <span class="panel__label">OUTPUT · CLASS</span>
+      </div>
+
+      <div class="output-display">
+        @if (result() > -1) {
+          <div class="result-digit">{{ result() }}</div>
+          <div class="result-label">PREDICTED CLASS</div>
+        } @else {
+          <div class="result-empty">—</div>
+          <div class="result-label">AWAITING INPUT</div>
+        }
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-cell">
+          <span class="meta-key">ARCH</span>
+          <span class="meta-val">LeNet-5</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-key">INPUT</span>
+          <span class="meta-val">32×32</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-key">DATASET</span>
+          <span class="meta-val">MNIST</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-key">CLASSES</span>
+          <span class="meta-val">10</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- footer -->
+  <footer class="footer">
+    <span>Remake of LeNet-5 · LeCun et al. 1998</span>
+    <span>MNIST · 60K TRAIN / 10K TEST</span>
+  </footer>
+
 </div>
